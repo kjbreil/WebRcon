@@ -1,5 +1,5 @@
 {
-  "name": "webrcon",
+  "name": "webrconjs",
   "description": "RCON over WebSocket client library and command line interface.",
   "author": "Daniel Wirtz <dcode@dcode.io>",
   "version": "1.0.0",

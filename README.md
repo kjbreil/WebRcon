@@ -8,7 +8,7 @@ RCON over WebSocket client library and command line interface.
 Usage
 -----
 ```js
-var WebRcon = require('webrcon') // node.js only
+var WebRcon = require('webrconjs') // node.js only
 
 // Create a new client:
 var rcon = new WebRcon('127.0.0.1', 28025)
@@ -49,7 +49,7 @@ Also works as an AMD module.
 
 Command line usage
 ------------------
-`npm -g install webrcon`
+`npm -g install webrconjs`
 
 ```
 Usage: webrcon <ip> [port] [password]
