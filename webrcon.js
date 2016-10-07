@@ -14,6 +14,7 @@
 
 })(this, function(isNode) {
     "use strict"
+
     
     /**
      * Actual WebSocket implementation used.
@@ -250,14 +251,36 @@
      * @param {string} command Command to run
      * @param {number=} identity Server identity, defaults to -1
      */
-    WebRcon.prototype.run = function run(command, identity) {
-        this.socket.send(JSON.stringify({
-            Identifier: identity === void 0 ? -1 : identity,
-            Message: command,
-            Name: 'WebRcon'
-        }))
-    }
+
+    // return new Promise(function (resolve, reject) {
+    //     WebRcon.prototype.run = function run(command, identity) {
+    //         this.socket.send(JSON.stringify({
+    //             Identifier: identity === void 0 ? -1 : identity,
+    //             Message: command,
+    //             Name: 'WebRcon'
+    //         }))
+    //     }
+    // })
+
+
     
+    WebRcon.prototype.run = function run(command, identity) {
+        return new Promise((resolve, reject) => {
+            this.socket.send(JSON.stringify({
+                Identifier: identity === void 0 ? -1 : identity,
+                Message: command,
+                Name: 'WebRcon'
+            }))
+            global.returnPromise = function (message, type, stacktrace, identity) {
+                resolve()
+            }
+            setTimeout(function() {
+                reject('Promise timed out after ' + ms + ' ms');
+            }, 60000);
+        })
+    }
+
+
     // Minimal EventEmitter
     
     /**
@@ -383,6 +406,9 @@
          * @type {number}
          */
         this.time = Date.now()
+
+        if (identity !== -1){returnPromise(message, type, stacktrace, identity)}
+        
     }
     
     /**
