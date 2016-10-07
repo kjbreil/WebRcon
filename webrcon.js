@@ -15,7 +15,8 @@
 })(this, function(isNode) {
     "use strict"
 
-    
+
+    // identifier = 1;
     /**
      * Actual WebSocket implementation used.
      * @type {function(string, new:WebSocket)}
@@ -37,7 +38,8 @@
          * @type {string}
          */
         this.ip = ip
-        
+        this.listeners = {};
+        this.identifier = 1;
         /**
          * Server port.
          * @type {number}
@@ -56,6 +58,8 @@
          * @private
          */
         this._listeners = {}
+
+
     }
     
     /**
@@ -266,8 +270,16 @@
     
     WebRcon.prototype.run = function run(command, identity) {
         return new Promise((resolve, reject) => {
+            if(identity != null)
+                this.listeners[this.identifier] = identity
+
+            this.identifier += 1;
+            if(this.identifier >= 256)
+                this.identifier = 1;
+
+
             this.socket.send(JSON.stringify({
-                Identifier: 1015,
+                Identifier: this.identifier,
                 Message: command,
                 Name: 'WebRcon'
             }))
