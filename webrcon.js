@@ -203,7 +203,11 @@
     
     function onmessage(e) {
         try {
-            this.emit('message', ServerMessage.fromPayload(e.data))
+            let msg = ServerMessage.fromPayload(e.data)
+            if (msg.identity > 1000){ 
+                resolverReturnOutside(msg)
+            }
+            this.emit('message', msg)
         } catch (err) {
             this.emit('error', err)
         }
@@ -423,9 +427,9 @@
          */
         this.time = Date.now()
 
-        if (identity > 1000){ 
-            resolverReturnOutside()
-        }
+        // if (identity > 1000){ 
+        //     resolverReturnOutside()
+        // }
     }
     
     /**
