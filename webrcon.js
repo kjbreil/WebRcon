@@ -267,7 +267,7 @@
     WebRcon.prototype.run = function run(command, identity) {
         return new Promise((resolve, reject) => {
             this.socket.send(JSON.stringify({
-                Identifier: identity === void 0 ? -1 : identity,
+                Identifier: 1015,
                 Message: command,
                 Name: 'WebRcon'
             }))
