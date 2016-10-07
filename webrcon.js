@@ -271,7 +271,7 @@
                 Message: command,
                 Name: 'WebRcon'
             }))
-            global.returnPromise = function (message, type, stacktrace, identity) {
+            global.returnRconRunPromise = function (message, type, stacktrace, identity) {
                 resolve()
             }
             setTimeout(function() {
@@ -407,7 +407,7 @@
          */
         this.time = Date.now()
 
-        if (identity !== -1){returnPromise(message, type, stacktrace, identity)}
+        if (identity !== -1){returnRconRunPromise(message, type, stacktrace, identity)}
         
     }
     
