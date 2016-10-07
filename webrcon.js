@@ -15,6 +15,10 @@
 })(this, function(isNode) {
     "use strict"
 
+    var resolverReturnOutside
+
+    var listeners = {};
+    var identifier = 1001;
 
     // identifier = 1;
     /**
@@ -32,14 +36,14 @@
      * @param {number} port Server port
      */
     function WebRcon(ip, port) {
+
         
         /**
          * Server IP.
          * @type {string}
          */
         this.ip = ip
-        this.listeners = {};
-        this.identifier = 1001;
+
         /**
          * Server port.
          * @type {number}
@@ -271,22 +275,21 @@
     WebRcon.prototype.run = function run(command, identity) {
         return new Promise((resolve, reject) => {
             if(identity != null)
-                this.listeners[this.identifier] = identity
+                listeners[identifier] = identity
 
-            this.identifier += 1;
-            if(this.identifier >= 2000)
-                this.identifier = 1001;
+            identifier += 1;
+            if(identifier >= 2000)
+                identifier = 1001;
 
 
             this.socket.send(JSON.stringify({
-                Identifier: this.identifier,
+                Identifier: identifier,
                 Message: command,
                 Name: 'WebRcon'
             }))
-            global.returnRconRunPromise = function (msg) {
-                
-                resolve(msg)
-            }
+
+            resolverReturnOutside = resolve
+
             setTimeout(function() {
                 reject();
             }, 60000);
@@ -421,7 +424,8 @@
         this.time = Date.now()
 
         if (identity > 1000){ 
-            returnRconRunPromise(this)}
+            resolverReturnOutside()
+        }
     }
     
     /**
