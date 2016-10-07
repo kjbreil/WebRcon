@@ -420,8 +420,7 @@
          */
         this.time = Date.now()
 
-        if (identity !== -1){ 
-            console.log(this)
+        if (identity < 1000){ 
             returnRconRunPromise(this)}
     }
     
