@@ -23,7 +23,7 @@
      * @inner
      */
     var WebSocketImpl = typeof WebSocket !== 'undefined' ? WebSocket : require('ws')
-    
+
     /**
      * WebRcon interface.
      * @exports WebRcon
@@ -39,7 +39,7 @@
          */
         this.ip = ip
         this.listeners = {};
-        this.identifier = 1;
+        this.identifier = 1001;
         /**
          * Server port.
          * @type {number}
@@ -274,8 +274,8 @@
                 this.listeners[this.identifier] = identity
 
             this.identifier += 1;
-            if(this.identifier >= 256)
-                this.identifier = 1;
+            if(this.identifier >= 2000)
+                this.identifier = 1001;
 
 
             this.socket.send(JSON.stringify({
