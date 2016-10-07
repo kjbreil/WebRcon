@@ -275,7 +275,7 @@
                 resolve()
             }
             setTimeout(function() {
-                reject('Promise timed out after ' + ms + ' ms');
+                reject();
             }, 60000);
         })
     }
